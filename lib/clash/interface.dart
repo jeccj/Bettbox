@@ -61,6 +61,8 @@ mixin ClashInterface {
 
   FutureOr<String> getTotalTraffic();
 
+  FutureOr<String> getAppTraffic();
+
   FutureOr<String> getCountryCode(String ip);
 
   FutureOr<String> getMemory();
@@ -387,6 +389,11 @@ abstract class ClashHandlerInterface with ClashInterface {
   @override
   FutureOr<String> getTotalTraffic() {
     return invoke<String>(method: ActionMethod.getTotalTraffic);
+  }
+
+  @override
+  FutureOr<String> getAppTraffic() {
+    return invoke<String>(method: ActionMethod.getAppTraffic);
   }
 
   @override

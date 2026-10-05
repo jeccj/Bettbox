@@ -264,6 +264,34 @@ class Traffic {
   int get hashCode => id.hashCode ^ up.hashCode ^ down.hashCode;
 }
 
+class AppTraffic {
+  final String process;
+  final int upload;
+  final int download;
+  final int total;
+
+  const AppTraffic({
+    required this.process,
+    required this.upload,
+    required this.download,
+    required this.total,
+  });
+
+  factory AppTraffic.fromJson(Map<String, dynamic> json) {
+    final upload = (json['upload'] as num?)?.toInt() ?? 0;
+    final download = (json['download'] as num?)?.toInt() ?? 0;
+    final process = (json['process'] ?? json['app'] ?? json['name'] ?? '')
+        .toString()
+        .trim();
+    return AppTraffic(
+      process: process.isEmpty ? 'Unknown' : process,
+      upload: upload,
+      download: download,
+      total: (json['total'] as num?)?.toInt() ?? upload + download,
+    );
+  }
+}
+
 @immutable
 class TrafficValueShow {
   final double value;

@@ -60,6 +60,7 @@ func handleInitClash(paramsString string) bool {
 	}
 	version = params.Version
 	if !isInit {
+		resetAppTraffic()
 		constant.SetHomeDir(params.HomeDir)
 		isInit = true
 		ensureLogSubscriber()
@@ -102,6 +103,7 @@ func handleForceGc(forceFreeOSMemory bool) {
 func handleShutdown() bool {
 	stopListeners()
 	executor.Shutdown()
+	resetAppTraffic()
 	tryUnloadGeoData()
 	handleClearRequests()
 	handleClearLogs()
@@ -231,6 +233,7 @@ func handleGetTotalTraffic() string {
 }
 
 func handleResetTraffic() {
+	resetAppTrafficForTraffic()
 	statistic.DefaultManager.ResetStatistic()
 }
 
@@ -873,6 +876,7 @@ func init() {
 	}
 	statistic.DefaultRequestNotify = func(c statistic.Tracker) {
 		info := c.Info()
+		recordAppTraffic(info)
 		recordRequestHistory(info)
 		if !isStreamingRequests.Load() {
 			return
@@ -930,4 +934,3 @@ func handleClearRequests() bool {
 	requestHistory = nil
 	return true
 }
-

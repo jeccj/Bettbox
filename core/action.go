@@ -111,6 +111,9 @@ func handleAction(action *Action, result ActionResult) {
 	case getTotalTrafficMethod:
 		result.success(handleGetTotalTraffic())
 		return
+	case getAppTrafficMethod:
+		result.success(handleGetAppTraffic())
+		return
 	case resetTrafficMethod:
 		handleResetTraffic()
 		result.success(true)

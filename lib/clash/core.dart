@@ -326,6 +326,26 @@ class ClashCore {
     }
   }
 
+  Future<List<AppTraffic>> getAppTraffic() async {
+    final appTrafficString = await clashInterface.getAppTraffic();
+    if (appTrafficString.isEmpty) {
+      return [];
+    }
+    try {
+      final decoded = json.decode(appTrafficString);
+      if (decoded is! List) {
+        return [];
+      }
+      return decoded
+          .whereType<Map>()
+          .map((item) => AppTraffic.fromJson(Map<String, dynamic>.from(item)))
+          .toList();
+    } catch (e) {
+      commonPrint.log('Failed to parse app traffic: $e');
+      return [];
+    }
+  }
+
   Future<int> getMemory() async {
     final value = await clashInterface.getMemory();
     if (value.isEmpty) {

@@ -9,6 +9,8 @@ import 'package:bett_box/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'app_traffic_dialog.dart';
+
 class TrafficUsage extends ConsumerStatefulWidget {
   const TrafficUsage({super.key});
 
@@ -105,7 +107,7 @@ class _TrafficUsageState extends ConsumerState<TrafficUsage> {
           label: appLocalizations.trafficUsage,
           iconData: Icons.data_saver_off,
         ),
-        onPressed: () {},
+        onPressed: () => showAppTrafficDialog(context),
         child: ValueListenableBuilder<int>(
           valueListenable: dashboardRefreshManager.tick1s,
           builder: (_, _, _) {
